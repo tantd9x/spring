@@ -49,8 +49,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.antMatcher("/dooor/**").httpBasic().authenticationEntryPoint(restServicesEntryPoint()).and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 
-				.authorizeRequests().antMatchers("/dooor/users/delete/*", "/dooor/users/create").hasAnyAuthority("ADMIN")
-				.antMatchers("/dooor/users").hasAnyAuthority("ADMIN", "USER").and()
+				.authorizeRequests().antMatchers("/dooor/users/delete/*", "/dooor/users/create")
+				.hasAnyAuthority("ADMIN").antMatchers("/dooor/users", "/dooor/users/*").hasAnyAuthority("ADMIN", "USER")
+				.and()
 
 				.addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
 				.exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
